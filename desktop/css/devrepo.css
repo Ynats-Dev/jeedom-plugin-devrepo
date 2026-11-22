@@ -1,0 +1,248 @@
+/* DevRepo — styles (variables du thème Jeedom clair / sombre) */
+
+.dr-root {
+  --dr-accent: var(--link-color, #039be5);
+  --dr-ok: #2fa84f;
+  --dr-ko: #e5484d;
+  --dr-warn: #f0a020;
+  --dr-radius: 6px;
+  --dr-border: rgba(127, 127, 127, 0.22);
+  --dr-soft: rgba(127, 127, 127, 0.06);
+  --dr-soft-strong: rgba(127, 127, 127, 0.14);
+  padding: 4px 2px;
+}
+
+/* Barre d'outils */
+.dr-root .dr-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 4px;
+}
+.dr-root .dr-spacer {
+  flex: 1 1 auto;
+}
+.dr-root .dr-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 1.05em;
+}
+.dr-root .dr-section i {
+  color: var(--dr-accent);
+}
+.dr-root .dr-count {
+  display: inline-block;
+  min-width: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--dr-soft-strong);
+  font-size: 0.8em;
+  line-height: 20px;
+  text-align: center;
+}
+.dr-root .dr-save.dr-clean {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.dr-root .dr-hint {
+  margin: 0 0 12px;
+  font-size: 0.88em;
+  opacity: 0.65;
+}
+
+/* Liste : grille compacte */
+.dr-root .dr-head,
+.dr-root .dr-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(220px, 2.4fr) minmax(80px, 0.6fr) minmax(120px, 0.8fr) 44px minmax(150px, 1fr) auto;
+  gap: 4px 8px;
+  align-items: start;
+}
+.dr-root .dr-head {
+  padding: 0 10px 4px;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.55;
+}
+.dr-root .dr-row {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius);
+  background: var(--dr-soft);
+}
+.dr-root .dr-cell {
+  min-width: 0;
+}
+.dr-root .dr-row .form-control.input-sm {
+  border-radius: 4px;
+}
+.dr-root .dr-token {
+  display: flex;
+  gap: 4px;
+}
+.dr-root .dr-auto {
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+.dr-root .dr-auto input {
+  margin: 0;
+  cursor: pointer;
+}
+.dr-root .dr-auto-mark {
+  color: var(--dr-accent);
+}
+.dr-root .dr-plugin input {
+  font-weight: 600;
+}
+.dr-root .dr-meta {
+  font-size: 0.82em;
+  opacity: 0.65;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* État de la dernière mise à jour */
+.dr-root .dr-last {
+  padding-top: 4px;
+  font-size: 0.88em;
+}
+.dr-root .dr-last-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.dr-root .dr-commit {
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--dr-soft-strong);
+  font-family: Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+.dr-root .dr-never {
+  opacity: 0.5;
+  font-style: italic;
+}
+.dr-root .dr-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.dr-root .dr-remove:hover {
+  color: var(--dr-ko);
+}
+
+/* Résultat d'une mise à jour sur la ligne */
+.dr-root .dr-row.dr-done {
+  border-color: var(--dr-ok);
+  box-shadow: inset 3px 0 0 var(--dr-ok);
+  animation: dr-flash 1.6s ease-out;
+}
+.dr-root .dr-row.dr-failed {
+  border-color: var(--dr-ko);
+  box-shadow: inset 3px 0 0 var(--dr-ko);
+}
+@keyframes dr-flash {
+  from { background: rgba(47, 168, 79, 0.25); }
+  to { background: var(--dr-soft); }
+}
+
+/* Webhook */
+.dr-root .dr-hook-panel {
+  grid-column: 1 / -1;
+  padding: 8px 10px;
+  border-top: 1px dashed var(--dr-border);
+}
+.dr-root .dr-hook-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.dr-root .dr-hook-label {
+  flex: 0 0 110px;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+.dr-root .dr-hook-panel .dr-meta {
+  white-space: normal;
+}
+
+/* Mode temps réel actif */
+.dr-root .dr-realtime.dr-live i {
+  animation: dr-pulse 1.2s ease-in-out infinite;
+}
+@keyframes dr-pulse {
+  50% { opacity: 0.3; }
+}
+
+/* Badges */
+.dr-root .dr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: normal;
+  background: var(--dr-soft-strong);
+}
+.dr-root .dr-badge.is-ok {
+  color: var(--dr-ok);
+  background: rgba(47, 168, 79, 0.12);
+}
+.dr-root .dr-badge.is-new {
+  color: var(--dr-accent);
+  background: rgba(3, 155, 229, 0.12);
+}
+.dr-root .dr-badge.is-warn {
+  color: var(--dr-warn);
+  background: rgba(240, 160, 32, 0.14);
+}
+.dr-root .dr-badge.is-error {
+  color: var(--dr-ko);
+  background: rgba(229, 72, 77, 0.12);
+}
+
+/* État vide */
+.dr-root .dr-empty {
+  padding: 30px 20px;
+  text-align: center;
+  border: 1px dashed var(--dr-border);
+  border-radius: var(--dr-radius);
+}
+.dr-root .dr-empty > i {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2em;
+  opacity: 0.4;
+}
+
+@media (max-width: 1199px) {
+  .dr-root .dr-head {
+    display: none !important;
+  }
+  .dr-root .dr-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dr-root .dr-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Durée du mode temps réel */
+.dr-root .dr-realtime-duration {
+  width: auto;
+  display: inline-block;
+}

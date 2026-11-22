@@ -1,0 +1,43 @@
+{
+	"id": "devrepo",
+	"name": "DevRepo",
+	"pluginVersion": "0.4",
+	"description": {
+		"fr_FR": "Met à jour vos plugins en développement depuis une branche de leur dépôt (Gogs, Gitea ou GitHub), sans git sur la box : idéal pour une installation Docker.",
+		"en_US": "Updates your development plugins from a branch of their repository (Gogs, Gitea or GitHub), without git on the box: ideal for a Docker installation.",
+		"de_DE": "Aktualisiert Ihre Plugins in Entwicklung aus einem Branch ihres Repositorys (Gogs, Gitea oder GitHub), ohne git auf der Box: ideal für eine Docker-Installation.",
+		"es_ES": "Actualiza sus plugins en desarrollo desde una rama de su repositorio (Gogs, Gitea o GitHub), sin git en la box: ideal para una instalación Docker.",
+		"it_IT": "Aggiorna i tuoi plugin in sviluppo da un branch del loro repository (Gogs, Gitea o GitHub), senza git sul box: ideale per un'installazione Docker.",
+		"pt_PT": "Atualiza os seus plugins em desenvolvimento a partir de um ramo do respetivo repositório (Gogs, Gitea ou GitHub), sem git na box: ideal para uma instalação Docker."
+	},
+	"licence": "AGPL",
+	"author": "Ynats",
+	"require": "4.2",
+	"category": "programming",
+	"hasDependency": false,
+	"hasOwnDeamon": false,
+	"maxDependancyInstallTime": 0,
+	"changelog": "https://ynats-dev.github.io/jeedom-plugin-devrepo/#language#/changelog",
+	"changelog_beta": "https://ynats-dev.github.io/jeedom-plugin-devrepo/#language#/changelog",
+	"documentation": "https://ynats-dev.github.io/jeedom-plugin-devrepo/#language#/",
+	"documentation_beta": "https://ynats-dev.github.io/jeedom-plugin-devrepo/#language#/",
+	"link": {
+		"forum": "https://community.jeedom.com/tag/plugin-devrepo"
+	},
+	"language": [
+		"fr_FR",
+		"en_US",
+		"de_DE",
+		"es_ES",
+		"it_IT",
+		"pt_PT"
+	],
+	"compatibility": [
+		"smart",
+		"luna",
+		"atlas",
+		"rpi",
+		"docker",
+		"diy"
+	]
+}
