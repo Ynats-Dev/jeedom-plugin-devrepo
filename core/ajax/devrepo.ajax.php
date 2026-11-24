@@ -30,6 +30,7 @@ try {
         ajax::success(array(
             'repos' => devrepo::listForUi(),
             'plugins' => devrepo::installedPlugins(),
+            'folders' => devrepo::pluginFolders(),
             'realtime' => devrepo::realtimeRemaining(),
             'realtimeDuration' => devrepo::realtimeDuration(),
             'webhook' => devrepo::webhookUrls(),

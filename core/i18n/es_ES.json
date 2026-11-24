@@ -89,7 +89,14 @@
         "Mode temps réel activé": "Modo tiempo real activado",
         "Vérifie les branches des plugins « Auto » toutes les 10 secondes pendant la durée choisie (pour le développement)": "Comprueba las ramas de los plugins «Auto» cada 10 segundos durante el tiempo elegido (para el desarrollo)",
         "Durée du mode temps réel": "Duración del modo tiempo real",
-        "prise en compte à la prochaine activation": "se aplica en la próxima activación"
+        "prise en compte à la prochaine activation": "se aplica en la próxima activación",
+        "Installer": "Instalar",
+        "Télécharger la branche et installer les fichiers du plugin": "Descargar la rama e instalar los archivos del plugin",
+        "Installer le plugin": "Instalar el plugin",
+        "depuis la branche": "desde la rama",
+        "installation…": "instalando…",
+        "installé": "instalado",
+        "à activer dans la gestion des plugins": "actívelo en la gestión de plugins"
     },
     "plugins\/devrepo\/desktop\/php\/devrepo.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",

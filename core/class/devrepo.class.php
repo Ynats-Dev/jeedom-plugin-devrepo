@@ -156,6 +156,15 @@ class devrepo extends eqLogic {
     return array($isGithub ? 'github' : 'gogs', $m[1], $m[2], $m[3]);
   }
 
+  /** Dossiers présents dans plugins/ : un plugin absent sera installé (et non mis à jour). */
+  public static function pluginFolders() {
+    $list = array();
+    foreach (glob(realpath(__DIR__ . '/../../..') . '/*', GLOB_ONLYDIR) ?: array() as $dir) {
+      $list[] = basename($dir);
+    }
+    return $list;
+  }
+
   private static function installedVersion($_pluginId) {
     $file = self::pluginDir($_pluginId) . '/plugin_info/info.json';
     if (!is_file($file)) {

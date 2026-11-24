@@ -89,7 +89,14 @@
         "Mode temps réel activé": "Real-time mode enabled",
         "Vérifie les branches des plugins « Auto » toutes les 10 secondes pendant la durée choisie (pour le développement)": "Checks the branches of “Auto” plugins every 10 seconds for the chosen duration (for development)",
         "Durée du mode temps réel": "Real-time mode duration",
-        "prise en compte à la prochaine activation": "applied the next time it is enabled"
+        "prise en compte à la prochaine activation": "applied the next time it is enabled",
+        "Installer": "Install",
+        "Télécharger la branche et installer les fichiers du plugin": "Download the branch and install the plugin files",
+        "Installer le plugin": "Install the plugin",
+        "depuis la branche": "from branch",
+        "installation…": "installing…",
+        "installé": "installed",
+        "à activer dans la gestion des plugins": "activate it in plugin management"
     },
     "plugins\/devrepo\/desktop\/php\/devrepo.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",

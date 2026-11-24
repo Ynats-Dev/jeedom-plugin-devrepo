@@ -110,10 +110,23 @@
       root.find('.dr-save').toggleClass('dr-clean', !dirty)
     }
 
+    /** « Installer » si l'id et le dépôt sont renseignés et que le dossier du plugin n'existe pas encore, sinon « Mettre à jour ». */
+    function isInstall(_row) {
+      var id = $.trim(_row.find('.dr-field[data-key=plugin]').val())
+      var repo = $.trim(_row.find('.dr-field[data-key=repo]').val())
+      return id != '' && repo != '' && folders.indexOf(id) == -1
+    }
+
+    function refreshButton(_row) {
+      var install = isInstall(_row)
+      _row.find('.dr-update span').text(install ? '{{Installer}}' : '{{Mettre à jour}}')
+      _row.find('.dr-update').attr('title', install ? '{{Télécharger la branche et installer les fichiers du plugin}}' : '{{Télécharger la branche et remplacer les fichiers}}')
+    }
+
     /** Confirmation visible sur la ligne du plugin après une mise à jour réussie. */
-    function showDone(_row, _summary) {
+    function showDone(_row, _summary, _installed) {
       _row.addClass('dr-done').find('.dr-check-result').empty()
-        .append($('<span class="dr-badge is-ok">').html('<i class="fas fa-check"></i> ').append(document.createTextNode('{{mis à jour}} · ' + _summary)))
+        .append($('<span class="dr-badge is-ok">').html('<i class="fas fa-check"></i> ').append(document.createTextNode((_installed ? '{{installé}}' : '{{mis à jour}}') + ' · ' + _summary)))
     }
 
     function addRow(_repo) {
@@ -156,14 +169,16 @@
       }
       line.append('<span class="dr-check-result"></span>')
       row.append(last)
-      row.append('<div class="dr-cell dr-actions"><a class="btn btn-default btn-sm dr-hook" title="{{Webhook : mise à jour immédiate à chaque push}}"><i class="fas fa-plug"></i></a><a class="btn btn-warning btn-sm dr-update" title="{{Télécharger la branche et remplacer les fichiers}}"><i class="fas fa-download"></i> {{Mettre à jour}}</a><a class="btn btn-default btn-sm dr-remove" title="{{Retirer de la liste}}"><i class="fas fa-times"></i></a></div>')
+      row.append('<div class="dr-cell dr-actions"><a class="btn btn-default btn-sm dr-hook" title="{{Webhook : mise à jour immédiate à chaque push}}"><i class="fas fa-plug"></i></a><a class="btn btn-warning btn-sm dr-update" title="{{Télécharger la branche et remplacer les fichiers}}"><i class="fas fa-download"></i> <span>{{Mettre à jour}}</span></a><a class="btn btn-default btn-sm dr-remove" title="{{Retirer de la liste}}"><i class="fas fa-times"></i></a></div>')
       row.data('lastCommit', _repo.last ? _repo.last.commit : '')
       root.find('.dr-list').append(row)
+      refreshButton(row)
       refreshEmpty()
       return row
     }
 
     var webhook = {}
+    var folders = []
     var realtimeEnd = 0
     var realtimeTimer = null
     var realtimeDuration = 60
@@ -221,6 +236,7 @@
     }
 
     function render(_result) {
+      folders = _result.folders || []
       webhook = _result.webhook || {}
       realtimeDuration = parseInt(_result.realtimeDuration, 10) || 60
       root.find('.dr-realtime-duration').val(String(realtimeDuration))
@@ -265,6 +281,7 @@
 
     root.on('input change', '.dr-field', function () {
       setDirty(true)
+      refreshButton($(this).closest('.dr-row'))
     })
     root.on('click', '.dr-add', function () {
       addRow({}).find('.dr-field[data-key=plugin]').focus()
@@ -374,16 +391,23 @@
         alertMsg('{{Indiquez d\'abord l\'id du plugin}}', 'warning')
         return
       }
-      confirmBox('{{Remplacer les fichiers du plugin}} « ' + $('<div>').text(id).html() + ' » {{par ceux de la branche}} « ' + $('<div>').text(branch).html() + ' » ?', function () {
+      var install = isInstall(row)
+      var question = install
+        ? '{{Installer le plugin}} « ' + $('<div>').text(id).html() + ' » {{depuis la branche}} « ' + $('<div>').text(branch).html() + ' » ?'
+        : '{{Remplacer les fichiers du plugin}} « ' + $('<div>').text(id).html() + ' » {{par ceux de la branche}} « ' + $('<div>').text(branch).html() + ' » ?'
+      confirmBox(question, function () {
         button.addClass('disabled').find('i').attr('class', 'fas fa-spinner fa-spin')
         row.removeClass('dr-done dr-failed').find('.dr-check-result').empty()
-          .append('<span class="dr-badge"><i class="fas fa-spinner fa-spin"></i> {{mise à jour…}}</span>')
+          .append('<span class="dr-badge"><i class="fas fa-spinner fa-spin"></i> ' + (install ? '{{installation…}}' : '{{mise à jour…}}') + '</span>')
         var start = dirty ? save() : $.Deferred().resolve().promise()
         start.then(function () {
           return call('updatePlugin', { plugin: id })
         }).then(function (last) {
           var summary = last.files + ' {{fichiers}}' + (last.version ? ' · v' + last.version : '') + (last.updateRun ? ' · {{fonction de mise à jour lancée}}' : '')
-          alertMsg(id + ' {{mis à jour}} : ' + lastText(last) + ' · ' + summary, 'success')
+          if (install) {
+            summary += ' · {{à activer dans la gestion des plugins}}'
+          }
+          alertMsg(id + ' ' + (install ? '{{installé}}' : '{{mis à jour}}') + ' : ' + lastText(last) + ' · ' + summary, 'success')
           // DevRepo vient de se mettre à jour lui-même : on recharge la page
           if (id == 'devrepo') {
             showDone(row, summary + ' · {{rechargement de la page…}}')
@@ -391,7 +415,7 @@
             return
           }
           return load().then(function () {
-            showDone(root.find('.dr-row').filter(function () { return $(this).attr('data-plugin') == id }), summary)
+            showDone(root.find('.dr-row').filter(function () { return $(this).attr('data-plugin') == id }), summary, install)
           })
         }, function (error) {
           row.addClass('dr-failed').find('.dr-check-result').empty()
